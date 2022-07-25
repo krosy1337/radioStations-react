@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.paused {
+    animation-play-state: paused;
+}
+
+.appContainer {
+    @apply pt-12 px-2 container md:pt-32;
+}
+
+.posCenter {
+    @apply absolute top-[50%] left-[50%] text-white translate-x-[-50%] translate-y-[-50%] z-10;
+}
+
+.diskBg {
+    @apply w-[200px] h-[200px] rounded-full mx-auto
+    animate-spin duration-1000 border-2 border-black paused
+    md:w-[250px] md:h-[250px];
+}
+
+.blackCircle {
+    @apply w-[40px] h-[40px] rounded-full mx-auto bg-black
+    absolute top-[50%] left-[50%] text-white translate-x-[-50%] translate-y-[-50%]
+    md:w-[50px] md:h-[50px];
+}
+
+@layer components {
+    .container {
+        @apply max-w-sm mx-auto;
+    }
+}
