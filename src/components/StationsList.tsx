@@ -2,29 +2,32 @@ import React, {FC, useEffect, useState} from "react"
 import Combobox, {IOption} from "./Combobox/Combobox"
 import {useActions, useAppSelector} from "hooks/redux"
 import {IStation} from "models/radio"
+import {SingleValue} from "react-select"
 
 
-const StationsList: FC<{stations: IStation[]}> = ({stations}) => {
+const StationsList: FC<{stations: IStation[], isLoading: boolean}> = ({stations, isLoading}) => {
     const {station} = useAppSelector(state => state.radio)
     const {setStation} = useActions()
     const [value, setValue] = useState<IOption>({} as IOption)
 
     const arr: IOption[] = stations.map((s) => ({
-        str: s.name,
+        label: s.name,
         value: s.stationuuid
     }))
 
-    useEffect(() => {
-        const station = stations.find((s) => s.stationuuid === value.value)
-        if (station) {
-            setStation(station)
+    const onChange = (newValue: SingleValue<IOption>) => {
+        if (newValue) {
+            const newStation = stations.find((s: IStation) => s.stationuuid === newValue.value)
+            if (newStation) {
+                setStation(newStation)
+            }
         }
-    }, [value])
+    }
 
     useEffect(() => {
         if (station) {
             setValue({
-                str: station.name,
+                label: station.name,
                 value: station.stationuuid,
             })
         }
@@ -33,7 +36,7 @@ const StationsList: FC<{stations: IStation[]}> = ({stations}) => {
     return (
         <>
             <div className="text-base mb-1">Station: </div>
-            <Combobox options={arr} value={value} setValue={setValue} />
+            <Combobox options={arr} value={value} onChange={onChange} isLoading={isLoading} />
         </>
     )
 }

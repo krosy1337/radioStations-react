@@ -109,10 +109,10 @@ const App: FC = () => {
                 }}/>
             </div>
             <div className="relative mt-2 z-10">
-                <CountryList countries={countries || []}/>
+                <CountryList countries={countries || []} isLoading={isCountriesLoading}/>
             </div>
             <div className="relative mt-2">
-                <StationsList stations={stations || []}/>
+                <StationsList stations={stations || []} isLoading={isStationsLoading}/>
             </div>
             <audio src={station?.url} ref={audioRef}
                    onCanPlay={() => setCanPlay(true)}/>
